@@ -7,7 +7,6 @@ import { ChampionshipsModule } from './championships/championships.module';
 import { GroupsModule } from './groups/groups.module';
 import { RacesModule } from './races/races.module';
 import { StatsModule } from './stats/stats.module';
-import { TextsModule } from './texts/texts.module';
 import { SeedService } from './seed.service';
 
 @Module({
@@ -26,7 +25,6 @@ import { SeedService } from './seed.service';
     GroupsModule,
     RacesModule,
     StatsModule,
-    TextsModule,
   ],
   providers: [SeedService],
 })
