@@ -1,8 +1,13 @@
 import axios from "axios";
 
-const apiUrl =
+const publicApiUrl =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") ||
-  "http://localhost:3001";
+  "http://localhost:3001/api";
+
+const internalApiUrl =
+  process.env.NEXT_INTERNAL_API_URL?.replace(/\/+$/, "") || publicApiUrl;
+
+const apiUrl = typeof window === "undefined" ? internalApiUrl : publicApiUrl;
 
 export const API_URL = apiUrl;
 export const API_BASE_URL = `${apiUrl}`;
