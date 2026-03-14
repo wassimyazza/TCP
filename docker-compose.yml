@@ -18,6 +18,10 @@ services:
     environment:
       MONGODB_URI: mongodb://mongo:27017/tcp
       JWT_SECRET: dev_jwt_secret
+      GOOGLE_CLIENT_ID: docker_google_client_id
+      GOOGLE_CLIENT_SECRET: docker_google_client_secret
+      FACEBOOK_APP_ID: docker_facebook_app_id
+      FACEBOOK_APP_SECRET: docker_facebook_app_secret
       PORT: 3001
     depends_on:
       - mongo
