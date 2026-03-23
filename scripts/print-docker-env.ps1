@@ -1,0 +1,1 @@
+Get-ChildItem Env: | Where-Object { $_.Name -like 'NEXT_*' -or $_.Name -like 'JWT_*' -or $_.Name -like 'MONGO*' }
