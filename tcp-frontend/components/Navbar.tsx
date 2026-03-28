@@ -138,7 +138,7 @@ export default function Navbar() {
             className="font-bold text-lg text-gray-900 tracking-tight"
             style={{ fontFamily: "Syne, sans-serif" }}
           >
-            Key<span className="text-sky-500">Race</span>
+            TCP
           </span>
         </Link>
 
