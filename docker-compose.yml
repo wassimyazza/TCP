@@ -1,0 +1,44 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: tcp-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./tcp-backend
+    container_name: tcp-backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/tcp
+      JWT_SECRET: dev_jwt_secret
+      GOOGLE_CLIENT_ID: docker_google_client_id
+      GOOGLE_CLIENT_SECRET: docker_google_client_secret
+      FACEBOOK_APP_ID: docker_facebook_app_id
+      FACEBOOK_APP_SECRET: docker_facebook_app_secret
+      PORT: 3001
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./tcp-frontend
+    container_name: tcp-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api
+      NEXT_INTERNAL_API_URL: http://backend:3001/api
+      NEXT_PUBLIC_SOCKET_URL: http://localhost:3001
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
