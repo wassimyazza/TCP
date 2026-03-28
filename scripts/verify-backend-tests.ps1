@@ -1,1 +1,0 @@
-& (Join-Path $PSScriptRoot "test-backend.ps1")

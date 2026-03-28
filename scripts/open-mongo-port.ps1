@@ -1,1 +1,0 @@
-Test-NetConnection -ComputerName localhost -Port 27017

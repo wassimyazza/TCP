@@ -1,1 +1,0 @@
-docker ps --filter "name=tcp-mongo"
