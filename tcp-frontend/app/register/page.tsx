@@ -66,7 +66,7 @@ export default function RegisterPage() {
             className="font-bold text-2xl text-white"
             style={{ fontFamily: "Syne, sans-serif" }}
           >
-            KeyRace
+            TCP
           </span>
         </div>
         <h2

@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "KeyRace — Type. Race. Win.",
+  title: "TCP — Type. Race. Win.",
   description: "Compete in real-time typing races and championships",
 };
 
@@ -33,4 +33,3 @@ export default function RootLayout({
     </html>
   );
 }
-
