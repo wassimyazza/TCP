@@ -1,6 +1,7 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { UsersService } from './users/users.service';
 import * as bcrypt from 'bcrypt';
+import { Role } from './enums/role.enum';
 
 @Injectable()
 export class SeedService implements OnApplicationBootstrap {
@@ -14,7 +15,7 @@ export class SeedService implements OnApplicationBootstrap {
         username: 'admin',
         email: 'admin@tcp.com',
         password: hashed,
-        role: 'admin',
+        role: Role.ADMIN,
       });
       console.log('Admin created: admin@tcp.com / admin123');
     }

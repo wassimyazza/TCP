@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { GroupStatus } from '../../enums/group-status.enum';
 
 export type GroupDocument = Group & Document;
 
@@ -12,10 +13,10 @@ export class Group {
   championship: Types.ObjectId;
 
   @Prop({ required: true })
-  scheduledAt: Date;
+  text: string;
 
   @Prop({ required: true })
-  text: string;
+  scheduledAt: Date;
 
   @Prop({ default: 10 })
   maxPlayers: number;
@@ -23,21 +24,10 @@ export class Group {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
   players: Types.ObjectId[];
 
-  @Prop({ default: 'waiting', enum: ['waiting', 'in_progress', 'finished'] })
-  status: string;
+  @Prop({ default: GroupStatus.WAITING, enum: Object.values(GroupStatus) })
+  status: GroupStatus;
 
-  @Prop({
-    type: [
-      {
-        user: { type: Types.ObjectId, ref: 'User' },
-        wpm: Number,
-        accuracy: Number,
-        rank: Number,
-        finishedAt: Date,
-      },
-    ],
-    default: [],
-  })
+  @Prop({ type: Array, default: [] })
   results: {
     user: Types.ObjectId;
     wpm: number;

@@ -15,13 +15,14 @@ import { UpdateGroupDto } from './dto/update-group.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
+import { Role } from 'src/enums/role.enum';
 
 @Controller('groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(Role.ADMIN)
   @Post()
   create(@Body() dto: CreateGroupDto) {
     return this.groupsService.create(dto);
@@ -43,14 +44,14 @@ export class GroupsController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(Role.ADMIN)
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: UpdateGroupDto) {
     return this.groupsService.update(id, dto);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(Role.ADMIN)
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.groupsService.delete(id);

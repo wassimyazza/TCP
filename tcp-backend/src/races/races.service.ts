@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { Race, RaceDocument } from './schemas/race.schema';
 import { Group, GroupDocument } from '../groups/schemas/group.schema';
 import { User, UserDocument } from '../users/schemas/user.schema';
+import { RaceStatus } from 'src/enums/race-status.enum';
 
 @Injectable()
 export class RacesService {
@@ -19,7 +20,7 @@ export class RacesService {
 
     const existing = await this.raceModel.findOne({
       group: groupId,
-      status: { $ne: 'finished' },
+      status: { $ne: RaceStatus.FINISHED },
     });
     if (existing) return existing;
 
@@ -49,7 +50,7 @@ export class RacesService {
 
   async getUserHistory(userId: string): Promise<RaceDocument[]> {
     return this.raceModel
-      .find({ 'players.user': userId, status: 'finished' })
+      .find({ 'players.user': userId, status: RaceStatus.FINISHED })
       .sort({ createdAt: -1 })
       .limit(20);
   }
@@ -127,7 +128,7 @@ export class RacesService {
   async finishRace(raceId: string): Promise<RaceDocument> {
     const race = await this.raceModel.findById(raceId);
     if (!race) throw new NotFoundException('Race not found');
-    if (race.status === 'finished') return race;
+    if (race.status === RaceStatus.FINISHED) return race;
 
     for (const player of race.players) {
       if (!player.finishedAt) {
@@ -140,7 +141,7 @@ export class RacesService {
       player.rank = index + 1;
     });
 
-    race.status = 'finished';
+    race.status = RaceStatus.FINISHED;
     race.finishedAt = new Date();
     await race.save();
     await this.saveResultsToGroup(race);
@@ -160,7 +161,7 @@ export class RacesService {
     }));
 
     await this.groupModel.findByIdAndUpdate(race.group, {
-      status: 'finished',
+      status: RaceStatus.FINISHED,
       results,
     });
 

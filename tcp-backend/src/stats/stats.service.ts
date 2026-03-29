@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../users/schemas/user.schema';
 import { Race, RaceDocument } from '../races/schemas/race.schema';
+import { Role } from 'src/enums/role.enum';
 
 @Injectable()
 export class StatsService {
@@ -13,7 +14,7 @@ export class StatsService {
 
   async getLeaderboard() {
     return this.userModel
-      .find({ 'stats.totalRaces': { $gt: 0 }, role: 'user' })
+      .find({ 'stats.totalRaces': { $gt: 0 }, role: Role.USER })
       .select('username avatar stats')
       .sort({ 'stats.bestWpm': -1 })
       .limit(20);
@@ -47,13 +48,13 @@ export class StatsService {
   }
 
   async getGlobalStats() {
-    const totalUsers = await this.userModel.countDocuments({ role: 'user' });
+    const totalUsers = await this.userModel.countDocuments({ role: Role.USER });
     const totalRaces = await this.raceModel.countDocuments({
       status: 'finished',
     });
 
     const topUser = await this.userModel
-      .findOne({ 'stats.totalRaces': { $gt: 0 }, role: 'user' })
+      .findOne({ 'stats.totalRaces': { $gt: 0 }, role: Role.USER })
       .select('username stats')
       .sort({ 'stats.bestWpm': -1 });
 

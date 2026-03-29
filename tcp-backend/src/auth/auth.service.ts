@@ -8,6 +8,7 @@ import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
+import { Provider } from 'src/enums/provider.enum';
 
 @Injectable()
 export class AuthService {
@@ -91,7 +92,7 @@ export class AuthService {
         email: profile.email,
         username,
         password: '',
-        provider: profile.provider,
+        provider: profile.provider as Provider,
         providerId: profile.providerId,
       });
     }

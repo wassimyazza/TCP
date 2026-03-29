@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Role } from '../../enums/role.enum';
+import { Provider } from '../../enums/provider.enum';
 
 export type UserDocument = User & Document;
 
@@ -14,14 +16,14 @@ export class User {
   @Prop({ default: '' })
   password: string;
 
-  @Prop({ default: 'user', enum: ['user', 'admin'] })
-  role: string;
+  @Prop({ default: Role.USER, enum: Object.values(Role) })
+  role: Role;
 
   @Prop({ default: '' })
   avatar: string;
 
-  @Prop({ default: 'local', enum: ['local', 'google', 'facebook'] })
-  provider: string;
+  @Prop({ default: Provider.LOCAL, enum: Object.values(Provider) })
+  provider: Provider;
 
   @Prop({ default: '' })
   providerId: string;

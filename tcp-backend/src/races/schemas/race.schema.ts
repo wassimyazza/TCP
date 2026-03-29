@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { RaceStatus } from '../../enums/race-status.enum';
 
 export type RaceDocument = Race & Document;
 
@@ -11,16 +12,13 @@ export class Race {
   @Prop({ required: true })
   text: string;
 
-  @Prop({
-    default: 'waiting',
-    enum: ['waiting', 'countdown', 'in_progress', 'finished'],
-  })
-  status: string;
+  @Prop({ default: RaceStatus.WAITING, enum: Object.values(RaceStatus) })
+  status: RaceStatus;
 
-  @Prop({ type: Date, default: null })
+  @Prop({ default: null })
   startedAt: Date;
 
-  @Prop({ type: Date, default: null })
+  @Prop({ default: null })
   finishedAt: Date;
 
   @Prop({
@@ -44,7 +42,7 @@ export class Race {
     wpm: number;
     accuracy: number;
     rank: number;
-    finishedAt: Date | null;
+    finishedAt: Date;
   }[];
 }
 
